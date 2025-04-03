@@ -21,6 +21,20 @@ RSpec.describe StringCalculator do
           expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-10>')
         end
       end
+
+      context 'when number is 1000' do
+        let(:input) { '1000'}
+        it 'return zero' do
+          expect(described_class.add(input)).to be(1000)
+        end
+      end
+
+      context 'when number is greater than 1000' do
+        let(:input) { '1001'}
+        it 'return zero' do
+          expect(described_class.add(input)).to be(0)
+        end
+      end
     end
 
     context 'when input string has comma separated two integer numbers' do
@@ -33,6 +47,13 @@ RSpec.describe StringCalculator do
         let(:input) {'-10, -20'}
         it 'raise error' do
           expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-10 -20>')
+        end
+      end
+
+      context 'when one number equal to 1000 and another is greater than 1000' do
+        let(:input) { '1000, 1001'}
+        it 'return zero' do
+          expect(described_class.add(input)).to be(1000)
         end
       end
     end
@@ -61,7 +82,7 @@ RSpec.describe StringCalculator do
       end
 
       context 'when few numbers are bigger than 1000' do
-        let(:input) { '20, 30\n50,1002,\n2000,100'}
+        let(:input) { '20, 30\n50,1002\n2000,100'}
         it 'return sum of  numbers while ignoring numbers bigger than 1000' do
           expect(described_class.add(input)).to be(200)
         end
@@ -114,7 +135,7 @@ RSpec.describe StringCalculator do
       context 'when few numbers are bigger than 1000' do
         let(:input) { '//:\n20:30:50:1000:30:1234:20'}
         it 'return sum of  numbers while ignoring numbers bigger than 1000' do
-          expect(described_class.add(input)).to be(150)
+          expect(described_class.add(input)).to be(1150)
         end
       end
     end

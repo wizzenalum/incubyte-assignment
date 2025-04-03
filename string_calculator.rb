@@ -2,7 +2,8 @@ module StringCalculator
   def self.add(input)
     numbers = parse_add_input(input)
     validate_add_numbers(numbers)
-    numbers.sum
+    valid_numbers = numbers.filter{ |number| number <= 1000}
+    valid_numbers.sum
   end
 
   private
