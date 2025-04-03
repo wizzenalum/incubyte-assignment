@@ -22,5 +22,14 @@ RSpec.describe StringCalculator do
         expect(described_class.add(input)).to be(30)
       end
     end
+
+    context 'when input string has comma separated multiple integer numbers' do
+      let(:array) { Array.new(Random.rand*20).map{|num| (Random.rand*100).to_i}}
+      let(:input) {array.join(', ')}
+      it 'return the sum of numbers' do
+        p input
+        expect(described_class.add(input)).to be(array.sum)
+      end
+    end
   end
 end
