@@ -13,15 +13,15 @@ module StringCalculator
     delimiters = ['\n', ',']
     if input.start_with?('//')
       delimiter_string, numbers_string = input.split('\n')
-      delimiters = get_delimiters(delimiter_string)
+      delimiter_string_without_prefix = delimiter_string[2..]
+      delimiters = get_delimiters(delimiter_string_without_prefix)
     end 
     str_to_int_array_by_delimiter(numbers_string, delimiters)
   end
 
   def self.get_delimiters(delimiter_string)
-    delimiter_string_without_prefix = delimiter_string[2..]
-    delimiters = [delimiter_string_without_prefix]
-    delimiters = delimiter_string_without_prefix.scan(/\[(.*?)\]/).flatten if delimiter_string_without_prefix.start_with?('[')
+    delimiters = [delimiter_string]
+    delimiters = delimiter_string.scan(/\[(.*?)\]/).flatten if delimiter_string.start_with?('[')
     delimiters
   end
 
