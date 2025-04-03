@@ -9,14 +9,17 @@ module StringCalculator
   def self.parse_add_input(input)
     return parse_add_input_delimited(input) if input.start_with?('//')
     input_with_comma_separator = input.gsub('\n', ',')
-    tokens = input_with_comma_separator.split(',')
-    tokens.map { |token| token.to_i}
+    str_to_int_array_by_delimiter(input_with_comma_separator, ',' )
   end
 
   def self.parse_add_input_delimited(input)
-    delimiter_token, numbers_token = input.split('\n')
-    delimiter = delimiter_token[2..]
-    tokens = numbers_token.split(delimiter)
-    tokens.map { |token| token.to_i}
+    delimiter_string, numbers_string = input.split('\n')
+    delimiter = delimiter_string[2..]
+    str_to_int_array_by_delimiter(numbers_string, delimiter )
+  end
+
+  def self.str_to_int_array_by_delimiter(string, delimiter)
+    tokens = string.split(delimiter)
+    tokens.map { |token| token.strip.to_i}
   end
 end
