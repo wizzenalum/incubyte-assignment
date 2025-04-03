@@ -21,7 +21,7 @@ module StringCalculator
   def self.get_delimiters(delimiter_string)
     delimiter_string_without_prefix = delimiter_string[2..]
     delimiters = [delimiter_string_without_prefix]
-    delimiters = delimiter_string_without_prefix.scan(/\[(.)\]/).flatten if delimiter_string_without_prefix.start_with?('[')
+    delimiters = delimiter_string_without_prefix.scan(/\[(.*?)\]/).flatten if delimiter_string_without_prefix.start_with?('[')
     delimiters
   end
 

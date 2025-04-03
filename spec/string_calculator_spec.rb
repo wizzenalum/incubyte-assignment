@@ -155,6 +155,13 @@ RSpec.describe StringCalculator do
         end
       end
 
+      context 'when delimiters are long string' do
+        let(:input) { '//[@@@@][$35$][%%%%%%][&][*]\n20*30&50%%%%%%10$35$10@@@@10$35$70' }
+        it 'return sum of  numbers' do
+          expect(described_class.add(input)).to be(200)
+        end
+      end
+
       context 'when some numbers are negative' do
         let(:input) { '//[;]["]\n-20;30"50;-30"40;-100' }
         it 'raise error' do
