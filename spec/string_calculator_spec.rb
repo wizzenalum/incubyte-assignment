@@ -60,6 +60,13 @@ RSpec.describe StringCalculator do
         end
       end
 
+      context 'when few numbers are bigger than 1000' do
+        let(:input) { '20, 30\n50,1002,\n2000,100'}
+        it 'return sum of  numbers while ignoring numbers bigger than 1000' do
+          expect(described_class.add(input)).to be(200)
+        end
+      end
+
       context 'when some numbers are negative' do
         let(:input) {'20, -30\n50,10\n-20'}
         it 'raise error' do
@@ -101,6 +108,13 @@ RSpec.describe StringCalculator do
         let(:input) { '//;\n-20;30;50;-30;40;-100' }
         it 'raise error' do
           expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-20 -30 -100>')
+        end
+      end
+
+      context 'when few numbers are bigger than 1000' do
+        let(:input) { '//:\n20:30:50:1000:30:1234:20'}
+        it 'return sum of  numbers while ignoring numbers bigger than 1000' do
+          expect(described_class.add(input)).to be(150)
         end
       end
     end
