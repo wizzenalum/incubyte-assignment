@@ -1,6 +1,7 @@
 module StringCalculator
   def self.add(input)
     numbers = parse_add_input(input)
+    validate_add_numbers(numbers)
     numbers.sum
   end
 
@@ -21,5 +22,11 @@ module StringCalculator
   def self.str_to_int_array_by_delimiter(string, delimiter)
     tokens = string.split(delimiter)
     tokens.map { |token| token.strip.to_i}
+  end
+
+  def self.validate_add_numbers(numbers)
+    negative_numbers = numbers.filter{ |number| number < 0 }
+    return if negative_numbers.empty?
+    raise ArgumentError.new("negative numbers not allowed <#{negative_numbers.join(' ')}>")
   end
 end
