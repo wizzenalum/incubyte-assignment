@@ -14,12 +14,26 @@ RSpec.describe StringCalculator do
       it 'return the number' do
         expect(described_class.add(input)).to be(10)
       end
+
+      context 'when number is negative' do
+        let(:input) {'-10'}
+        it 'raise error' do
+          expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-10>')
+        end
+      end
     end
 
     context 'when input string has comma separated two integer numbers' do
       let(:input) {'10, 20'}
       it 'return the sum of numbers' do
         expect(described_class.add(input)).to be(30)
+      end
+
+      context 'when both numbers are negative' do
+        let(:input) {'-10, -20'}
+        it 'raise error' do
+          expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-10 -20>')
+        end
       end
     end
 
@@ -45,6 +59,13 @@ RSpec.describe StringCalculator do
           expect(described_class.add(input)).to be(100)
         end
       end
+
+      context 'when some numbers are negative' do
+        let(:input) {'20, -30\n50,10\n-20'}
+        it 'raise error' do
+          expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-30 -20>')
+        end
+      end
     end
 
     context 'when input string can have dynamic delimiters' do
@@ -56,7 +77,7 @@ RSpec.describe StringCalculator do
       end
 
       context 'when semi-colon is delimiter' do
-        let(:input) { '//:\n20:30:50'}
+        let(:input) { '//:\n20:30:50' }
         it 'return sum of  numbers' do
           expect(described_class.add(input)).to be(100)
         end
@@ -70,9 +91,16 @@ RSpec.describe StringCalculator do
       end
 
       context 'when number is delimiter' do
-        let(:input) { '//10001\n20100013010001501000110010001100'}
+        let(:input) { '//10001\n20100013010001501000110010001100' }
         it 'return sum of  numbers' do
           expect(described_class.add(input)).to be(300)
+        end
+      end
+
+      context 'when some numbers are negative' do
+        let(:input) { '//;\n-20;30;50;-30;40;-100' }
+        it 'raise error' do
+          expect{ described_class.add(input) }.to raise_error(ArgumentError, 'negative numbers not allowed <-20 -30 -100>')
         end
       end
     end
